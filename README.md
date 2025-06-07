@@ -649,7 +649,9 @@ ORDER BY
     salary_ranking ASC;
 ```
 
+## Summary: 
 
+Built a relational database simulating an HR backend using SQL. Key tables include Employees, Departments, Attendance, Performance_Reviews, Projects, and Employee_Projects. Implemented SQL features like DDL/DML, constraints, joins, views, stored procedures, triggers, CTAS, and analytical queries to manage and analyze employee data. Gained hands-on experience with real-world SQL practices and enterprise-level database design.
 
 
 
