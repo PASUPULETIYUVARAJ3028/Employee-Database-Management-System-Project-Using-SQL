@@ -13,21 +13,28 @@ I built an Employee Database Management System to simulate a real HR backend. It
 ## Objective
 Design a relational database to manage employee information, departments, performance, salaries, and more — using SQL DDL, DML, constraints, joins, views, procedures, triggers, CTAS and analytical queries.
 
-## Project Name: "Employee Database Management System"
+## Project Name: Employee Database Management System
 
 ### Step 1: Creating DB of Employee_DB_Management_System
-
+```sql
 CREATE DATABASE Employee_DB_Management_System;
 USE Employee_DB_Management_System;
+```
+### ER-Diagram of Employee_DB_Management_System
+![ER-Diagram](https://github.com/PASUPULETIYUVARAJ3028/Employee-Database-Management-System-Project-Using-SQL/blob/main/ER-Diagram.png)
+
+## Step 2: CRUD Operations
+-- **Task 1**: Create: Inserted sample records into the tables.
+
+-- **Task 2**: Read: Retrieved and displayed data from various tables.
+
+-- **Task 3**: Update: Updated records in the customer table.
+
+-- **Task 4**: Delete: Removed records from the cusomter table as needed.
 
 
--- Step 2: CRUD Operations
--- Task 1: Create: Inserted sample records into the tables.
--- Task 2: Read: Retrieved and displayed data from various tables.
--- Task 3: Update: Updated records in the customer table.
--- Task 4: Delete: Removed records from the cusomter table as needed.
-
--- Task 1: Creating varies tables of "Employee Database Management System"
+-- **Task 1:** Creating varies tables of "Employee Database Management System
+```sql
 -- Table: departments
 -- departments, Employees, Performance_Reviews,Attendance, Projects, and Employee_Projects
 CREATE TABLE Departments (
@@ -81,9 +88,10 @@ CREATE TABLE Employee_Projects (
     FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
     FOREIGN KEY (project_id) REFERENCES Projects(project_id)
 );
+```
 
-
--- Task 2: Read: Retrieved and displayed data from various tables.
+-- **Task 2**: Read: Retrieved and displayed data from various tables.
+```sql
 -- Insert 'Departments' records
 INSERT INTO Departments (department_name) VALUES
 ('Sales'),
@@ -114,8 +122,10 @@ INSERT INTO Employee_Projects (employee_id, project_id, role) VALUES
 (7, 22, 'Analyst'),
 (6, 26, 'Manager'),
 (8, 1, 'Team Lead');
+```
 
--- Task 3: Update: Updated records in the customer table.    
+-- **Task 3**: Update: Updated records in the customer table. 
+```sql
 UPDATE Employees 
 SET 
 	gender = 'male', hire_date = curdate()
@@ -127,9 +137,10 @@ SET
 	review_date = current_date() ,comments='excellent' 
 WHERE 
 	review_id = 15 and employee_id = 4;
+```
 
--- Task 4: Delete: Removed records from the cusomter table as needed.
-
+-- **Task 4**: Delete: Removed records from the cusomter table as needed.
+```sql
 -- Step 1: Delete from Attendance
 DELETE FROM Attendance WHERE employee_id = 1;
 
@@ -141,12 +152,12 @@ DELETE FROM Employee_Projects WHERE employee_id = 1;
 
 -- Step 4: Now delete from Employees
 DELETE FROM Employees WHERE employee_id = 1;
+```
 
+## Step 3: Data Analysis
 
--- Step: Data Analysis
-
--- Task 5:   List all employees with their department names
-
+-- **Task 5**: List all employees with their department names
+```sql
 SELECT 
     e.employee_id,
     e.name,
@@ -166,8 +177,10 @@ ON
     e.department_id = d.department_id
 GROUP BY
     d.department_name;
+```
 
--- Task 7. Get average salary by department
+-- **Task 7**: Get average salary by department.
+```sql
 SELECT 
     d.department_name,
     round(avg(e.salary),0) AS 'avg_salary'
@@ -177,22 +190,25 @@ ON
     e.department_id = d.department_id
 GROUP BY
     d.department_name;
+```
 
-
--- Task 8. Find employees who have never received a performance review
+-- **Task 8**: Find employees who have never received a performance review
+```sql
 SELECT 
     name
 FROM employees
 WHERE employee_id NOT IN (SELECT DISTINCT employee_id FROM Performance_Reviews);
+```
 
-
--- Task 9.  Get the top 5 highest paid employees
+-- **Task 9**:  Get the top 5 highest paid employees
+```sql
 SELECT * FROM Employees
 ORDER BY salary DESC
 LIMIT 5;
+```
 
-
--- Task 10. Show employees working on more than 1 project
+-- **Task 10**: Show employees working on more than 1 project
+```sql
 SELECT  
     employee_id,
     count(*) AS count_of_project
@@ -202,9 +218,10 @@ GROUP BY
     employee_id
 HAVING 
     count_of_project > 1;
+```
 
-
--- Task 11. List all employees with their latest performance review
+-- **Task 11:** List all employees with their latest performance review
+```sql
 SELECT
     e.employee_id,
     e.name,
@@ -221,10 +238,10 @@ GROUP BY
     p.rating
 ORDER BY
    p.rating DESC;
+```
 
-
--- Task 12. Get attendance summary (present/absent/leave) for each employee
-
+-- **Task 12**: Get attendance summary (present/absent/leave) for each employee
+```sql
 SELECT
     e.employee_id,
     e.name,
@@ -238,17 +255,16 @@ FROM
 GROUP BY
      e.employee_id,
      e.name;
+```
 
-
--- Task 13. List employees who joined in the last 6 months
-SELECT MAX(hire_date) FROM employees;
-SELECT '2024-11-28' - INTERVAL 6 MONTH;
-
+-- **Task 13** List employees who joined in the last 6 months.
+```sql
 SELECT * FROM employees
 WHERE hire_date >= (CURRENT_DATE - INTERVAL 6 MONTH);
-   
+```   
 
--- Task 14. Find the department with the highest average salary
+-- **Task 14**: Find the department with the highest average salary.
+```sql
 SELECT 
     d.department_name,
     round(avg(e.salary),0) AS avg_salary
@@ -261,10 +277,10 @@ GROUP BY
 ORDER BY
     avg_salary DESC 
 LIMIT 1;
+```
 
-
--- Task 15: Show number of reviews each reviewer has conducted
-
+-- **Task 15**: Show number of reviews each reviewer has conducted
+```sql
 SELECT 
     reviewer_id,
     count(*) AS reviews_given
@@ -274,9 +290,10 @@ GROUP BY
      reviewer_id
 ORDER BY
     reviews_given DESC;
+```
 
-
--- Task 16: Get total number of employees in each gender
+-- **Task 16**: Get total number of employees in each gender
+```sql
 SELECT
     gender,
     COUNT(*) AS count
@@ -284,9 +301,10 @@ FROM
     Employees
 GROUP BY
     gender;
+```
 
-
--- Task 17: Get average rating received by each employee
+-- **Task 17**: Get average rating received by each employee
+```sql
 SELECT
     e.employee_id,
     e.name,
@@ -301,9 +319,10 @@ GROUP BY
     e.name
 ORDER BY
     avg_rating ASC;
+```
 
-
--- Task 18: Show employee count for each project
+-- **Task 18:** Show employee count for each project.
+```sql
 SELECT  
     p.project_name,
     count(employee_id) as employee_count
@@ -315,11 +334,11 @@ GROUP BY
     p.project_name
 ORDER BY
     employee_count DESC;
+```
 
 
-
--- Task 19: List employees assigned as 'Manager' in any project
-
+-- **Task 19**: List employees assigned as 'Manager' in any project
+```sql
 SELECT
     e.employee_id,
     e.name,
@@ -335,11 +354,11 @@ FROM
     ep.project_id = p.project_id
 WHERE
     ep.role = 'Manager';
+```
 
 
-
--- Task 20: List all employees who are both reviewers and have been reviewed
-
+-- **Task 20**: List all employees who are both reviewers and have been reviewed
+```sql
 SELECT DISTINCT e.name
 FROM Employees e
 WHERE e.employee_id IN (
@@ -348,9 +367,10 @@ WHERE e.employee_id IN (
 AND e.employee_id IN (
     SELECT employee_id FROM Performance_Reviews
 );
+```
 
-
--- Task 21: Find employees absent more than 5 times
+-- **Task 21**: Find employees absent more than 5 times
+```sql
 SELECT
     e.employee_id,
     e.name,
@@ -366,9 +386,10 @@ GROUP BY
      
 HAVING
     count_Absent > 5;
+```
 
-
--- Task 22: List employees and the number of projects they are involved in
+-- **Task 22**: List employees and the number of projects they are involved in
+```sql
 SELECT 
      e.employee_id,
      e.name,
@@ -382,9 +403,10 @@ FROM
 GROUP BY
     e.employee_id,
     e.name;
+```
 
-
--- Task 23: Find projects that ended before today.
+-- **Task 23**: Find projects that ended before today.
+```sql
 SELECT 
     project_name,
     end_date
@@ -392,10 +414,11 @@ FROM
     Projects
 WHERE
      end_date < CURRENT_DATE;
+```
 
 
-
--- Task 24: Show employee(s) with the maximum salary
+-- **Task 24**: Show employee(s) with the maximum salary.
+```sql
 SELECT 
     employee_id,
     name,
@@ -407,11 +430,12 @@ GROUP BY
     name
 ORDER BY
     high_salary DESC;
+```
 
+## Step 4: Stored Procedure
 
--- Step 3: Stored Procedure
--- Task 25: Get Employee Reviews
-
+-- **Task 25**: Get Employee Reviews
+```sql
 DELIMITER $$
 
 CREATE PROCEDURE GetReviews(IN emp_id INT)
@@ -422,9 +446,10 @@ END $$
 DELIMITER ;
 
 call GetReviews(1);
+```
 
-
--- Task 26: Get Employee details & attendence.
+-- **Task 26**: Get Employee details & attendence.
+```sql
 DELIMITER $$
 CREATE PROCEDURE Get_employee_attendence(IN emp_id INT)
 BEGIN
@@ -457,10 +482,10 @@ DELIMITER ;
 CALL Get_employee_attendence(2);
 CALL Get_employee_attendence(3);
 CALL Get_employee_attendence(4);
+```
 
-
--- Task 27: Get employee - id, name & department.
-
+-- **Task 27**: Get employee - id, name & department.
+```sql
 DELIMITER $$
 CREATE PROCEDURE get_employee_department(IN emp_id INT)
 BEGIN
@@ -483,10 +508,10 @@ DELIMITER ;
 CALL get_employee_department(2);
 CALL get_employee_department(3);
 CALL get_employee_department(4);
+```
 
-
--- Task 28: trigger: Insert Default Attendance on New Employee
-
+-- **Task 28**: trigger: Insert Default Attendance on New Employee
+```sql
 DELIMITER $$
 
 CREATE TRIGGER insert_attendance_after_employee
@@ -501,10 +526,12 @@ DELIMITER ;
 
 select * from employees;
 insert into employees values (40, 'baskar','male','2025-06-06',2,20000);
+```
 
--- Step 4: views
+## Step 5: views
 
--- Task 29: View: Get Summary of Average Salary by Department
+-- **Task 29**: View: Get Summary of Average Salary by Department.
+```sql
 CREATE VIEW get_avg_salary_department as (
 SELECT 
     d.department_name,
@@ -518,9 +545,10 @@ GROUP BY
 );
 
 SELECT * FROM get_avg_salary_department;
+```
 
--- Task 30: View: Get Summary of project Name along with no.of employees working in it.
-
+-- **Task 30**: View: Get Summary of project Name along with no.of employees working in it.
+```sql
 CREATE VIEW pro_count_emp as (
     SELECT
     p.project_name,
@@ -536,8 +564,10 @@ ORDER BY
 );
 
 SELECT * FROM pro_count_emp;
+```
 
--- Task 40: View: Get Summary of no.of employess working in each department.
+-- **Task 40**: View: Get Summary of no.of employess working in each department.
+```sql
 CREATE VIEW department_count_employee AS (
     SELECT
     d.department_name,
@@ -554,9 +584,11 @@ ORDER BY
 );
 
 SELECT * FROM department_count_employee;
+```
 
--- Task 41:  Employee Summary Report with Attendance, Project Role, and Latest Performance Review using CTAS (COMMON TABLE AS SELECT)
+-- **Task 41**:  Employee Summary Report with Attendance, Project Role, and Latest Performance Review using CTAS (COMMON TABLE AS SELECT)
 
+```sql
 CREATE TABLE employee_summary as (
     
 SELECT
@@ -597,8 +629,10 @@ SELECT * FROM employee_summary where department_name = 'Sales';
 SELECT * FROM employee_summary where department_name = 'Research and Development';
 SELECT * FROM employee_summary where department_name = 'Engineering';
 SELECT * FROM employee_summary where department_name = 'Finance';
+```
 
--- TASK 42: Top Earners in Each Department – Ranked Overview
+-- **TASK 42**: Top Earners in Each Department – Ranked Overview.
+```sql
 SELECT 
     employee_id,
     name,
@@ -613,7 +647,7 @@ FROM
     employee_summary
 ORDER BY 
     salary_ranking ASC;
-
+```
 
 
 
